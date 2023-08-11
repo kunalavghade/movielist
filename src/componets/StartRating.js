@@ -4,6 +4,7 @@ export default function StarRating({
   maxRating = 10,
   color = "#fcc419",
   size = 48,
+  setUserRating,
 }) {
   const containerStyle = {
     display: "flex",
@@ -27,6 +28,7 @@ export default function StarRating({
   const [tempRating, setTempRating] = useState(0);
 
   function handleRating(rating) {
+    setUserRating(rating);
     setRating(rating);
   }
 
