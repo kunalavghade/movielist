@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { KEY } from "../App";
 import StarRating from "./StartRating";
 import { Loader } from "./Loader";
+import { useKey } from "../states/useKey";
 
 export function Main({ children }) {
   return <main className="main">{children}</main>;
@@ -64,14 +65,7 @@ export function SelectedMovie({
     };
   }, [movie.Title]);
 
-  useEffect(() => {
-    console.log("called");
-    const callBack = (e) => {
-      if (e.code === "Escape") setSelectedId(null);
-    };
-    document.addEventListener("keydown", callBack);
-    return () => document.removeEventListener("keydown", callBack);
-  }, [setSelectedId]);
+  useKey("Escape", () => setSelectedId(null));
 
   useEffect(() => {
     async function getMovieDetails() {

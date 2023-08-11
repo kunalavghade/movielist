@@ -27,7 +27,7 @@ export function WatchedSummary({ watched }) {
     </div>
   );
 }
-export function WatchedMovieList({ watched }) {
+export function WatchedMovieList({ watched, onDeleteWatched }) {
   return (
     <ul className="list">
       {watched.map((movie) => (
@@ -47,6 +47,12 @@ export function WatchedMovieList({ watched }) {
               <span>⏳</span>
               <span>{movie.Runtime} min</span>
             </p>
+            <button
+              className="btn-delete"
+              onClick={() => onDeleteWatched(movie.imdbID)}
+            >
+              X
+            </button>
           </div>
         </li>
       ))}

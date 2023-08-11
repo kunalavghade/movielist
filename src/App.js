@@ -3,12 +3,13 @@ import { Loader, ErrorMessage } from "./componets/Loader";
 import { NavBar, Logo, Search, NumResult } from "./componets/NavBar";
 import { Main, Box, MovieList, SelectedMovie } from "./componets/Main";
 import { WatchedSummary, WatchedMovieList } from "./componets/WatchedSummary";
+import { useLocalStorageState } from "./states/useLocalStorageState";
 
 export const KEY = "665dc82a";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
+  const [watched, setWatched] = useLocalStorageState([], "watched");
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
@@ -24,6 +25,12 @@ export default function App() {
       },
     ]);
     console.log(watched);
+  }
+
+  // console.log(localStorage.getItem("watched"));
+
+  function onDeleteWatched(id) {
+    setWatched((watched) => watched.filter((movies) => movies.imdbID !== id));
   }
 
   function handleSelect(id) {
@@ -87,7 +94,10 @@ export default function App() {
           ) : (
             <>
               <WatchedSummary watched={watched} />
-              <WatchedMovieList watched={watched} />{" "}
+              <WatchedMovieList
+                watched={watched}
+                onDeleteWatched={onDeleteWatched}
+              />{" "}
             </>
           )}
         </Box>
